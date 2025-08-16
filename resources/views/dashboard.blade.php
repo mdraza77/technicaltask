@@ -12,6 +12,15 @@
                     {{ __("You're logged in!") }}
                 </div>
             </div>
+            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    {{ __('Dashboard') }}
+                </x-nav-link>
+
+                <x-nav-link :href="route('facilities.index')" :active="request()->routeIs('facilities.index')">
+                    {{ __('Facilities') }}
+                </x-nav-link>
+            </div>
         </div>
     </div>
 </x-app-layout>
