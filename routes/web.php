@@ -19,6 +19,9 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('facilities', FacilityController::class);
     Route::get('facilities/export/csv', [FacilityController::class, 'exportCsv'])->name('facilities.export.csv');
+
+    Route::get('facilities-trash', [FacilityController::class, 'trashed'])->name('facilities.trashed');
+    Route::post('facilities-trash/{id}/restore', [FacilityController::class, 'restore'])->name('facilities.restore');
 });
 
 require __DIR__ . '/auth.php';

@@ -8,12 +8,17 @@ use App\Models\Material;
 
 class FacilityController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        $facilities = Facility::latest()->paginate(10);
+        $query = Facility::query();
+
+        $query->when($request->search, function ($q, $search) {
+            return $q->where('business_name', 'like', "%{$search}%")
+                ->orWhere('street_address', 'like', "%{$search}%");
+        });
+
+        $facilities = $query->latest()->paginate(10)->appends($request->query());
+
         return view('facilities.index', compact('facilities'));
     }
 
@@ -98,5 +103,21 @@ class FacilityController extends Controller
     {
         $facility->delete();
         return redirect()->route('facilities.index')->with('success', 'Facility moved to trash successfully!');
+    }
+
+    public function trashed()
+    {
+        $facilities = Facility::onlyTrashed()->latest()->paginate(10);
+
+        return view('facilities.trashed', compact('facilities'));
+    }
+
+    public function restore($id)
+    {
+        $facility = Facility::onlyTrashed()->findOrFail($id);
+
+        $facility->restore();
+
+        return redirect()->route('facilities.trashed')->with('success', 'Facility restored successfully!');
     }
 }
