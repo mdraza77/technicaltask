@@ -53,32 +53,50 @@ class FacilityController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Facility $facility)
     {
-        //
+        return view('facilities.show', compact('facility'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Facility $facility)
     {
-        //
+        $materials = Material::all();
+        return view('facilities.edit', compact('facility', 'materials'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Facility $facility)
     {
-        //
+        $validatedData = $request->validate([
+            'business_name' => 'required|string|max:255',
+            'street_address' => 'required|string|max:255',
+            'last_update_date' => 'required|date',
+            'materials' => 'required|array',
+            'materials.*' => 'exists:materials,id',
+        ]);
+
+        $facility->update([
+            'business_name' => $validatedData['business_name'],
+            'street_address' => $validatedData['street_address'],
+            'last_update_date' => $validatedData['last_update_date'],
+        ]);
+
+        $facility->materials()->sync($validatedData['materials']);
+
+        return redirect()->route('facilities.index')->with('success', 'Facility updated successfully!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Facility $facility)
     {
-        //
+        $facility->delete();
+        return redirect()->route('facilities.index')->with('success', 'Facility moved to trash successfully!');
     }
 }

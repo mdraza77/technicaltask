@@ -276,6 +276,14 @@
                                                     </path>
                                                 </svg>
                                             </a>
+                                            <form action="{{ route('facilities.destroy', $facility->id) }}"
+                                                method="POST" class="inline-block"
+                                                onsubmit="return confirm('Are you sure you want to delete this facility?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                    class="text-red-600 hover:text-red-900">Delete</button>
+                                            </form>
                                         </div>
                                     </td>
                                 </tr>
