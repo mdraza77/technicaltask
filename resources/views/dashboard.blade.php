@@ -265,6 +265,7 @@
                         @endif
                     </div>
                 </div>
+
             </div>
 
             <!-- Welcome Message -->

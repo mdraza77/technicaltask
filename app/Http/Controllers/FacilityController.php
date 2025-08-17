@@ -141,4 +141,13 @@ class FacilityController extends Controller
 
         return redirect()->route('facilities.trashed')->with('success', 'Facility restored successfully!');
     }
+
+    public function forceDelete(Request $request, $id)
+{
+    $facility = $request->user()->facilities()->onlyTrashed()->findOrFail($id);
+    
+    $facility->forceDelete();
+
+    return redirect()->route('facilities.trashed')->with('success', 'Facility permanently deleted!');
+}
 }

@@ -19,10 +19,14 @@
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             </div>
                         </div>
-                        <a class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
+                        <a class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors duration-200"
                             href="{{ route('facilities.trashed') }}"
                             class="text-sm text-gray-700 hover:text-indigo-600 mr-4">
-                            View Trash ({{ Auth()->user()->facilities()->onlyTrashed()->count() }})
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>({{ Auth()->user()->facilities()->onlyTrashed()->count() }})
                         </a>
                         <a href="{{ route('facilities.create') }}"
                             class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
@@ -163,6 +167,14 @@
                                     class="text-blue-600 hover:text-blue-800 text-sm font-medium">View</a>
                                 <a href="{{ route('facilities.edit', $facility) }}"
                                     class="text-green-600 hover:text-green-800 text-sm font-medium">Edit</a>
+                                <form action="{{ route('facilities.destroy', $facility->id) }}" method="POST"
+                                    class="inline-block"
+                                    onsubmit="return confirm('Are you sure you want to delete this facility?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                        class="text-red-600 hover:text-red-900 text-sm font-medium">Delete</button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -199,8 +211,12 @@
                             value="{{ request('search') }}">
 
                         <button type="submit"
-                            class="px-4 py-2 bg-indigo-600 text-white font-semibold rounded-r-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                            Search
+                            class="px-4 py-3 bg-indigo-600 text-white font-semibold rounded-r-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
                         </button>
                     </div>
                 </form>
@@ -293,8 +309,13 @@
                                                 onsubmit="return confirm('Are you sure you want to delete this facility?');">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit"
-                                                    class="text-red-600 hover:text-red-900">Delete</button>
+                                                <button type="submit" class="text-red-600 hover:text-red-900"><svg
+                                                        xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                                        fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                                        stroke-width="2">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                    </svg></button>
                                             </form>
                                         </div>
                                     </td>
@@ -329,55 +350,10 @@
                     </table>
                 </div>
             </div>
-
             <!-- Pagination -->
-            @if ($facilities->hasPages())
-                <div class="mt-8">
-                    <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
-                        <div class="flex-1 flex justify-between sm:hidden">
-                            @if ($facilities->onFirstPage())
-                                <span
-                                    class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-500 bg-white cursor-not-allowed">
-                                    Previous
-                                </span>
-                            @else
-                                <a href="{{ $facilities->previousPageUrl() }}"
-                                    class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-                                    Previous
-                                </a>
-                            @endif
-
-                            @if ($facilities->hasMorePages())
-                                <a href="{{ $facilities->nextPageUrl() }}"
-                                    class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-                                    Next
-                                </a>
-                            @else
-                                <span
-                                    class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-500 bg-white cursor-not-allowed">
-                                    Next
-                                </span>
-                            @endif
-                        </div>
-                        <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-                            <div>
-                                <p class="text-sm text-gray-700">
-                                    Showing
-                                    <span class="font-medium">{{ $facilities->firstItem() }}</span>
-                                    to
-                                    <span class="font-medium">{{ $facilities->lastItem() }}</span>
-                                    of
-                                    <span class="font-medium">{{ $facilities->total() }}</span>
-                                    results
-                                </p>
-                            </div>
-                            <div>
-                                {{ $facilities->links() }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endif
+            <div class="mt-2">
+                {{ $facilities->links() }}
+            </div>
         </div>
     </div>
 </x-app-layout>

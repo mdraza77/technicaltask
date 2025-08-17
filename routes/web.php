@@ -22,6 +22,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('facilities-trash', [FacilityController::class, 'trashed'])->name('facilities.trashed');
     Route::post('facilities-trash/{id}/restore', [FacilityController::class, 'restore'])->name('facilities.restore');
+    Route::delete('facilities-trash/{id}/force-delete', [FacilityController::class, 'forceDelete'])->name('facilities.forceDelete');
 });
 
 require __DIR__ . '/auth.php';
