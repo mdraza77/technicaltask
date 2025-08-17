@@ -1,61 +1,118 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel Recycling Facility Directory - Technical Task
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This application was developed as a technical task. The goal is to create a directory to manage recycling facilities, featuring user authentication, CRUD for facilities, search functionality, and data ownership.
 
-## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Features Implemented
 
-## Learning Laravel
+-   **User Authentication:**
+    -   Secure user registration and login system.
+    -   Password reset functionality.
+    -   Protected routes accessible only to authenticated users.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+-   **Facility Management (CRUD):**
+    -   Feature to create new facilities.
+    -   A paginated view to list all facilities.
+    -   Functionality to edit and update facility details.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+-   **Data Ownership & Security:**
+    -   Each user can only view, edit, or delete their own facilities.
+    -   No user can access another user's data, ensuring data privacy.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+-   **Search Functionality:**
+    -   Ability to search for facilities by their business name or address.
+    -   Search results work seamlessly with pagination.
 
-## Laravel Sponsors
+-   **Trash & Restore (Soft Deletes):**
+    -   Functionality to soft delete (move to trash) facilities.
+    -   A dedicated trash page to view all soft-deleted records.
+    -   Ability to restore trashed facilities.
+    -   A feature to **permanently delete** a facility from the database.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+-   **Many-to-Many Relationship:**
+    -   A many-to-many relationship is established between Facilities and Materials.
+    -   Users can select multiple recyclable materials when creating or editing a facility.
 
-### Premium Partners
+---
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## Tech Stack
 
-## Contributing
+-   **Backend:** Laravel 11
+-   **Frontend:** Tailwind CSS, Blade Templates
+-   **Database:** MySQL
+-   **Authentication:** Laravel Breeze
+-   **Development Environment:** Laragon
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+## Installation Steps
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Follow the steps below to set up the project on your local machine:
 
-## Security Vulnerabilities
+1.  **Clone the Repository:**
+    ```bash
+    git clone https://github.com/mdraza77/technicaltask.git
+    cd technicaltask
+    ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+2.  **Install Dependencies:**
+    ```bash
+    composer install
+    npm install
+    ```
 
-## License
+3.  **Set Up the Environment File:**
+    -   Copy the `.env.example` file to a new file named `.env`.
+    ```bash
+    cp .env.example .env
+    ```
+    -   Open your `.env` file and set your database name, username, and password.
+    ```
+    DB_DATABASE=recycling_directory
+    DB_USERNAME=root
+    DB_PASSWORD=
+    ```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+4.  **Generate Application Key:**
+    ```bash
+    php artisan key:generate
+    ```
+
+5.  **Run Database Migrations & Seeding:**
+    -   This command will create all necessary tables and populate them with dummy data.
+    -   This is a destructive command and will wipe all existing data from the database.
+    ```bash
+    php artisan migrate:fresh --seed
+    ```
+
+6.  **Compile Frontend Assets:**
+    ```bash
+    npm run dev
+    ```
+
+7.  **Start the Development Server:**
+    ```bash
+    php artisan serve
+    ```
+    You can now access the application at `http://127.0.0.1:8000`.
+
+---
+
+## Login Credentials
+
+You can log in and test the application's features using the following dummy account created by the seeder:
+
+-   **Email:** `mdraza8297@gmail.com`
+-   **Password:** `raza123123`
+
+## 👨‍💻 About the Developer
+
+This project was created by **Md Raza**. I am a passionate web developer interested in building modern and efficient applications with Laravel and other technologies.
+
+- 🔗 **LinkedIn:** [linkedin.com/in/your-profile-url](https://www.linkedin.com/in/md-raza-web-developer/)
+- 🐙 **GitHub:** [github.com/your-username](https://github.com/mdraza77)
+- 🌐 **Portfolio:** [your-portfolio-website.com](https://mdraza77.github.io/Portfolio/)
+- 📧 **Email:** [mdraza8397@gmail.com](mailto:mdraza8397@gmail.com)
