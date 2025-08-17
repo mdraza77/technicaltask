@@ -112,7 +112,7 @@ You can log in and test the application's features using the following dummy acc
 
 This project was created by **Md Raza**. I am a passionate web developer interested in building modern and efficient applications with Laravel and other technologies.
 
-- 🔗 **LinkedIn:** [linkedin.com/in/your-profile-url](https://www.linkedin.com/in/md-raza-web-developer/)
-- 🐙 **GitHub:** [github.com/your-username](https://github.com/mdraza77)
-- 🌐 **Portfolio:** [your-portfolio-website.com](https://mdraza77.github.io/Portfolio/)
+- 🔗 **LinkedIn:** [https://www.linkedin.com/in/md-raza-web-developer/](https://www.linkedin.com/in/md-raza-web-developer/)
+- 🐙 **GitHub:** [https://github.com/mdraza77](https://github.com/mdraza77)
+- 🌐 **Portfolio:** [https://mdraza77.github.io/Portfolio/](https://mdraza77.github.io/Portfolio/)
 - 📧 **Email:** [mdraza8397@gmail.com](mailto:mdraza8397@gmail.com)
